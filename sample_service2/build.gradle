@@ -1,0 +1,56 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.8.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.subhajit.sleuth.sampleservice2'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+mainClassName = 'com.subhajit.sleuth.sample_service2.SampleService2Application'
+
+repositories {
+    mavenCentral()
+}
+
+
+ext {
+    springCloudVersion = 'Dalston.SR4'
+}
+
+dependencies {
+    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    compile('org.springframework.cloud:spring-cloud-starter-zipkin')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+        
+    // for kafka support 
+    compile "org.apache.kafka:kafka-clients:0.10.2.0"
+    compile "org.springframework.kafka:spring-kafka:1.2.2.RELEASE"
+    
+    // for normal kafka communication use following
+    // compile "org.springframework.cloud:spring-cloud-stream"
+    
+    // for normal kafka communication with sleuth use following
+    compile "org.springframework.cloud:spring-cloud-sleuth-stream"
+    
+    compile ('org.springframework.cloud:spring-cloud-starter-stream-kafka')  
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
