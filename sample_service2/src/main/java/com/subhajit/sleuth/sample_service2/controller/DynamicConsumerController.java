@@ -31,6 +31,6 @@ public class DynamicConsumerController {
         newchannel.subscribe(c);
         newchannel.addInterceptor(channelInterceptor);
         bindingService.bindConsumer(newchannel, "testchannel");
-        bindingService.unbindConsumers("testchannel");
+        //bindingService.unbindConsumers("testchannel");
     } 
 }
