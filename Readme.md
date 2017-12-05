@@ -1,6 +1,6 @@
-# Spring Cloud Sleuth For Microservice Tracing #
+# Spring Cloud Sleuth For Microservice Tracing and Kafka communication between microservice with Spring Cloud Stream
 
-##Introduction##
+## Introduction
 
 Spring Cloud Sleuth provides a way to track requests between multiple microservices in a distributed system architecture. For tracing it provides following information :
 	1. Trace-Id : Consistent Id between microservices two trace a request.
@@ -8,7 +8,7 @@ Spring Cloud Sleuth provides a way to track requests between multiple microservi
 	3. Exportable : true if traces are send to Zipkin Server.
 
 
-##Pre-requisites##
+## Pre-requisites
 	1. Gradle
 	2. Java 8
 	
