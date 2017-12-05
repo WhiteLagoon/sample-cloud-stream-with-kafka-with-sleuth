@@ -1,0 +1,45 @@
+spring:
+    application:
+        name: sample-service1
+#   Percentage of logs export to sleuth server
+    sleuth:
+        stream:
+            enabled: false
+        sampler:
+            percentage: 0.5
+    zipkin:
+#       For enabling Zipkin Client for this Microservice
+        enabled: false 
+#       Server Url
+        baseUrl: http://localhost:9411
+        locator:
+            discovery:
+                enabled: false
+#   Kafka Configuration using cloud stream
+    cloud:
+        stream: 
+            default:
+                contentType: application/json
+            bindings:
+                outputchannel:
+                    destination: abcd
+                anotherchannel:
+                    destination: sampletopic
+            kafka:
+                binder:
+                    # zookeeper ip
+                    zkNodes: kafka
+                    # kafka broker ip
+                    brokers: kafka 
+                    # Custom headers for sleuth for normal kafka communication no need to add
+                    headers: X-B3-TraceId,X-B3-SpanId, X-B3-Sampled,X-B3-ParentSpanId, X-Span-Name, X-Process-Id, messageSent,X-Span-Export
+
+
+server:
+    port: 7000
+
+allowedchannels: outputchannel,anotherchannel
+
+    
+    
+
