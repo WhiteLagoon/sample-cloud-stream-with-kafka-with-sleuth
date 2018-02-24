@@ -6,12 +6,12 @@ spring:
         stream:
             enabled: false
         sampler:
-            percentage: 0.5
+            percentage: 0.8
     zipkin:
 #       For enabling Zipkin Client for this Microservice
-        enabled: false 
+        enabled: true 
 #       Server Url
-        baseUrl: http://localhost:9411
+        baseUrl: http://localhost:9412
         locator:
             discovery:
                 enabled: false
@@ -40,6 +40,7 @@ server:
 
 allowedchannels: outputchannel,anotherchannel
 
-    
-    
 
+logging:
+    level:
+        root: INFO

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.binding.BinderAwareChannelResolver;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,20 +27,21 @@ import org.springframework.web.bind.annotation.RestController;
  * @author sghosh
  */
 @RestController
-@EnableBinding(OutputChannel.class)
+@EnableBinding
 public class SampleKafkaProducerController {
     Logger logger = LoggerFactory.getLogger(SampleKafkaProducerController.class);
     
-    private final OutputChannel outputChannel;
+//    private final OutputChannel outputChannel;
     
     @Value("${allowedchannels}")
     String allowedchannels;
     
+//    @Autowired
+//    public SampleKafkaProducerController(OutputChannel channel) {
+//        this.outputChannel=channel;
+//    }
     @Autowired
-    public SampleKafkaProducerController(OutputChannel channel) {
-        this.outputChannel=channel;
-    }
-    
+    private BinderAwareChannelResolver resolver;
     
     // This api takes one path variable called channel -- example purpose channel name should be "outputchannel,anotherchannel"
     // allowed channel names are taking from application.yml file
@@ -64,9 +66,9 @@ public class SampleKafkaProducerController {
                 .setHeader("messageSent", "true");
         
         if ("outputchannel".contains(topic)) {
-            outputChannel.output().send(messageBuilder.build());
+            resolver.resolveDestination("outputchannel").send(messageBuilder.build());
         } else {
-            outputChannel.anotheroutput().send(messageBuilder.build());
+//            outputChannel.anotheroutput().send(messageBuilder.build());
         }
         
         logger.info("Message successfully pushed to kafka");

@@ -14,10 +14,26 @@
         <encoder>
             <pattern>[%d{yyyy-MM-dd'T'HH:mm:ss.sss'Z'}] [%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] [%C] [%t] [%L] [%-5p]  %m%n</pattern>
         </encoder>
+    </appender>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
+        <File>/var/tmp/microservices/sampleservice1/sampleservice3.log</File>
+        <encoder>
+            <pattern>%m%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <maxIndex>10</maxIndex>
+            <FileNamePattern>/var/tmp/microservices/sampleservice1/sampleservice3.%i</FileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>250MB</MaxFileSize>
+        </triggeringPolicy>
     </appender> 
-  
+     
     <root level="INFO">      
+        <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/> 
+        
     </root>
     <jmxConfigurator/>
 </configuration>
